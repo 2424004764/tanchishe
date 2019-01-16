@@ -5,6 +5,7 @@ let isGenerateFoods = false // 是否生成食物
 let generateFoodsLoc = {x: '', y:''} // 生成的食物坐标
 let ifPausegame = false // 是否暂停游戏
 let snaikeBody = [] // 蛇的身体 
+let speed = 200 // 速度 值越小 移动速度越快 建议100~1000 之间
 
 
 $(document).ready(function(){
@@ -122,6 +123,7 @@ function startGame (app=$("#"+app+"")) {
                     console.log('咬到自己了！')
                     $("#tip").css({'display':'block'})
                     $("#tip .commit").css({'display':'block'})
+                    $("#controller").css({'display':'none'})
                     clearInterval(t1) // 清除定时器
                 }
             }
@@ -133,6 +135,7 @@ function startGame (app=$("#"+app+"")) {
     snaikeBody[snaikeBody.length - 1]['y'] < 0 || snaikeBody[snaikeBody.length - 1]['x'] < 0){
         $("#tip").css({'display':'block'})
         $("#tip .qiang").css({'display':'block'})
+        $("#controller").css({'display':'none'})
         clearInterval(t1) // 清除定时器
     }
 }
@@ -331,7 +334,6 @@ function loadShe(width, height, app) {
     $("#tip .qiang").css({'display':'none'})
     $("#tip .commit").css({'display':'none'})
     clearInterval(t1) // 清除定时器
-    unloadParams() // 重置参数
     // 初始化游戏区域、坐标轴
     let apps = $("#"+app+"")
     apps.html("")
@@ -361,16 +363,6 @@ function loadShe(width, height, app) {
     generateRandomFoods()
 }
 
-// 初始化参数
-function unloadParams() {
-    console.log('unloadParams')
-    fangxiang = 'r' // 方向默认向右
-    getFoods = [] // 将吃到的食物清空
-    isStartGame = true // 默认可以开始游戏
-    isGenerateFoods = false
-    generateFoodsLoc = {x: '', y:''}
-}
-
 // 获取最小值到最大值之间的整数随机数
 function GetRandomNum(Min, Max) {
     return (Min + Math.round((Math.random()) * (Max - Min)))
@@ -386,21 +378,27 @@ function generateRandomFoods(){
     }
     // 在此处写检测生成的位置是否是蛇身 如果是，则重新生成 直到非蛇身位置
     console.log('生成食物 x', randomX, ' y ', randomY)
+
     for(let i = 0; i < snaikeBody.length; i++){
+        // 如果生成的食物在蛇身范围内
         if(snaikeBody[i]['x'] == randomX && snaikeBody[i]['y'] == randomY){
             console.log('生成的食物在蛇身体部分，重新生成')
-            generateRandomFoods()
+            // 继续循环 直到生成的食物不在蛇身范围内
+            continue
+        }else{
+            // 生成食物
+            $("#app .x-"+randomX+".y-"+randomY+"").removeClass("brithLoc").css({'background':'green'})
+            generateFoodsLoc['x'] = randomX
+            generateFoodsLoc['y'] = randomY
+            isGenerateFoods = true
         }
     }
-    $("#app .x-"+randomX+".y-"+randomY+"").removeClass("brithLoc").css({'background':'green'})
-    generateFoodsLoc['x'] = randomX
-    generateFoodsLoc['y'] = randomY
-    isGenerateFoods = true
+    
 }
 
 function goGame() {
     clearInterval(t1)
-    t1 = window.setInterval('startGame(app)', 200)
+    t1 = window.setInterval('startGame(app)', speed)
 }
 
 function onLoadSnakeBody(){
