@@ -1,6 +1,6 @@
 #app{
     margin: 0 auto;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 #app .grid{
     float: left;
@@ -26,4 +26,45 @@
     line-height: 50px;
     text-align: center;
     background: white;
+}
+#asle{
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    /* border: 1px solid red; */
+    position: relative;
+    font-size: 36px;
+    line-height: 180px;
+    text-align: center;
+}
+#asle .left{
+    border: 1px solid red;
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    top: 90px;
+}
+#asle .top{
+    border: 1px solid saddlebrown;
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    left: 180px;
+}
+#asle .right{
+    border: 1px solid seagreen;
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    left: 360px;
+    top: 90px;
+}
+#asle .bottom{
+    border: 1px solid yellow;
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    left: 180px;
+    top: 180px;
 }

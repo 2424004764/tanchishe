@@ -7,7 +7,6 @@ let ifPausegame = false // 是否暂停游戏
 let snaikeBody = [] // 蛇的身体 
 let speed = 200 // 速度 值越小 移动速度越快 建议100~1000 之间
 
-
 $(document).ready(function(){
     let width = 800 // 游戏屏幕宽度
     let height = 800 // 游戏屏幕高度 
@@ -61,6 +60,18 @@ $(document).ready(function(){
             }
         })
     }
+    $("#asle .left").on('click', function(){
+        fangxiang = 'l'
+    })
+    $("#asle .top").on('click', function(){
+        fangxiang = 't'
+    })
+    $("#asle .right").on('click', function(){
+        fangxiang = 'r'
+    })
+    $("#asle .bottom").on('click', function(){
+        fangxiang = 'b'
+    })
 })
 
 //  每次移动
@@ -354,7 +365,7 @@ function loadShe(width, height, app) {
 
         let className = "grid"
         // 生成游戏格子 html
-        _html += "<div class='"+ className +" x-"+x+" y-"+y+"'>"+x+"-"+y+"</div>"
+        _html += "<div class='"+ className +" x-"+x+" y-"+y+"'></div>"
     }
     apps.append(_html) // 生成游戏格子
     // 初始化蛇的身体
