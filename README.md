@@ -104,6 +104,29 @@ function moveDispose(symbol, axle){
 
 1、生成食物问题，有时候会生成到蛇身体位置
 
-2、不能让蛇反向移动，当蛇的前进方向为右时，按下左方向键时，还应该向右方向移动
+2、不能让蛇反向移动，当蛇的前进方向为右时，按下左方向键时，还应该向右方向移动  已解决
+
+```javascript
+let keyCode = event.which
+            if(keyCode == 38 || keyCode == 87){
+                // 不能往反方向前进 如果方向为下 则不能为上
+                fangxiang = fangxiang == 'b' ? 'b' : 't' // 上 
+            }else if(keyCode == 37 || keyCode == 65){
+                fangxiang = fangxiang == 'r' ? 'r' : 'l' // 左
+            }else if(keyCode == 40 || keyCode == 83){
+                fangxiang = fangxiang == 't' ? 't' : 'b' // 下
+            }else if(keyCode == 39 || keyCode == 68){
+                fangxiang = fangxiang == 'l' ? 'l' : 'r' // 右
+            }else if(keyCode == 32){ // 暂停游戏 空格键
+                if(!ifPausegame){
+                    console.log('暂停游戏')
+                    clearInterval(t1)
+                    ifPausegame = !ifPausegame
+                }else{
+                    console.log('继续游戏')
+                    goGame()
+                }
+            }
+```
 
 3、吃到的食物填充到蛇身后的问题

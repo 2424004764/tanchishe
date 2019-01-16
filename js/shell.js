@@ -41,14 +41,15 @@ $(document).ready(function(){
             // console.log('按键', event.which )
             let keyCode = event.which
             if(keyCode == 38 || keyCode == 87){
-                fangxiang = 't' // 上
+                // 不能往反方向前进 如果方向为下 则不能为上
+                fangxiang = fangxiang == 'b' ? 'b' : 't' // 上 
             }else if(keyCode == 37 || keyCode == 65){
-                fangxiang = 'l' // 左
+                fangxiang = fangxiang == 'r' ? 'r' : 'l' // 左
             }else if(keyCode == 40 || keyCode == 83){
-                fangxiang = 'b' // 下
+                fangxiang = fangxiang == 't' ? 't' : 'b' // 下
             }else if(keyCode == 39 || keyCode == 68){
-                fangxiang = 'r' // 右
-            }else if(keyCode == 32){ // 暂停游戏
+                fangxiang = fangxiang == 'l' ? 'l' : 'r' // 右
+            }else if(keyCode == 32){ // 暂停游戏 空格键
                 if(!ifPausegame){
                     console.log('暂停游戏')
                     clearInterval(t1)
