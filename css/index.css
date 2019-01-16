@@ -1,0 +1,29 @@
+#app{
+    margin: 0 auto;
+    border: 1px solid red;
+}
+#app .grid{
+    float: left;
+    width: 48px;
+    height: 48px;
+    border: 1px solid yellow;
+}
+#app .brithLoc{
+    background: black;
+}
+#controller{
+    width: 800px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+#tip{
+    border: 1px solid red;
+    position: absolute;
+    top: 38.5%;
+    left: 38.5%;
+    width: 30%;
+    height: 120px;
+    line-height: 50px;
+    text-align: center;
+    background: white;
+}
