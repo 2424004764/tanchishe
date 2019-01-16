@@ -6,7 +6,9 @@
 
 jquery主要用来抓取元素，绘制蛇身 设置样式
 
-![1547609540634](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1547609540634.png)
+![http://qn.fologde.com/2019-01-16/11:59:25.jpg]()
+
+
 
 设计思路：
 
