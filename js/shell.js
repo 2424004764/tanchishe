@@ -83,45 +83,14 @@ function startGame (app=$("#"+app+"")) {
     let snakeLength = snaikeBody.length
     if(fangxiang == 't'){ // 如果按下 上方向键
         moveDispose(fangxiang, 'x')
-        for(let j = 0; j < snakeLength; j++){
-            if(j == 0){
-                clear_axle(snaikeBody[j]['x'], snaikeBody[j]['y'])
-            }
-            // 从最后一个元素开始循环
-            let color = j == 0 ? "red" : "black"
-            $("#app .x-"+snaikeBody[snakeLength - (j + 1)]['x']+".y-"+snaikeBody[snakeLength - (j + 1)]['y']+"").css({'background': color})
-        }                                                                       
     }else if(fangxiang == 'l'){ // 如果按下 左方向键
         moveDispose(fangxiang, 'y')
-        for(let j = 0; j < snakeLength; j++){
-            if(j == 0){
-                clear_axle(snaikeBody[j]['x'], snaikeBody[j]['y'])
-            }
-            // 从最后一个元素开始循环
-            let color = j == 0 ? "red" : "black"
-            $("#app .x-"+snaikeBody[snakeLength - (j + 1)]['x']+".y-"+snaikeBody[snakeLength - (j + 1)]['y']+"").css({'background': color})
-        }
     }else if(fangxiang == 'b'){ // 如果按下 下方向键
         moveDispose(fangxiang, 'x')
-        for(let j = 0; j < snakeLength; j++){
-            if(j == 0){
-                clear_axle(snaikeBody[j]['x'], snaikeBody[j]['y'])
-            }
-            // 从最后一个元素开始循环
-            let color = j == 0 ? "red" : "black"
-            $("#app .x-"+snaikeBody[snakeLength - (j + 1)]['x']+".y-"+snaikeBody[snakeLength - (j + 1)]['y']+"").css({'background': color})
-        }
     }else if(fangxiang == 'r'){ // 如果按下 右方向键
         moveDispose(fangxiang, 'y')
-        for(let j = 0; j < snakeLength; j++){
-            if(j == 0){
-                clear_axle(snaikeBody[j]['x'], snaikeBody[j]['y'])
-            }
-            // 从最后一个元素开始循环
-            let color = j == 0 ? "red" : "black"
-            $("#app .x-"+snaikeBody[snakeLength - (j + 1)]['x']+".y-"+snaikeBody[snakeLength - (j + 1)]['y']+"").css({'background': color})
-        }
     }
+    clear_axle(snakeLength)
     eachFood(fangxiang)
     // console.log(snaikeBody[snaikeBody.length - 1]['x'], snaikeBody[snaikeBody.length - 1]['y'])
 
@@ -165,81 +134,44 @@ function is_snakeBody(x, y){
 }
 
 // x、y轴坐标
-function clear_axle(x, y){
-    // console.log('x', x)
-    // console.log('y', y)
+function clear_axle(snakeLength){
+    for(let j = 0; j < snakeLength; j++){
+        if(j == 0){
+            // 获取当前蛇尾的上下左右的位置
+            let x_left_coord = snaikeBody[j]['x']
+            let y_left_coord = snaikeBody[j]['y'] - 1
 
-    // 获取当前蛇尾的上下左右的位置
-    let x_left_coord = x
-    let y_left_coord = y - 1
+            let x_top_coord = snaikeBody[j]['x'] - 1
+            let y_top_coord = snaikeBody[j]['y']
 
-    let x_top_coord = x - 1
-    let y_top_coord = y
+            let x_right_coord = snaikeBody[j]['x']
+            let y_right_coord = snaikeBody[j]['y'] + 1
 
-    let x_right_coord = x
-    let y_right_coord = y + 1
+            let x_bottom_coord = snaikeBody[j]['x'] + 1
+            let y_bottom_coord = snaikeBody[j]['y']
 
-    let x_bottom_coord = x + 1
-    let y_bottom_coord = y
+            let x_asle = generateFoodsLoc['x']
+            let y_asle = generateFoodsLoc['y']
 
-    let x_asle = generateFoodsLoc['x']
-    let y_asle = generateFoodsLoc['y']
-
-    // console.log('x_asle', x_asle)
-    // console.log('y_asle', y_asle)
-
-    // console.log("generateFoodsLoc['x']", generateFoodsLoc['x'])
-    // console.log("generateFoodsLoc['y']", generateFoodsLoc['y'])
-
-    // console.log('x_left_coord', x_left_coord)
-    // console.log('y_left_coord', y_left_coord)
-
-    // console.log('x_top_coord', x_top_coord)
-    // console.log('y_top_coord', y_top_coord)
-
-    // console.log('x_right_coord', x_right_coord)
-    // console.log('y_right_coord', y_right_coord)
-
-    // console.log('x_bottom_coord', x_bottom_coord)
-    // console.log('y_bottom_coord', y_bottom_coord)
-
-    // console.log("is_snakeBody", is_snakeBody(x_left_coord, y_left_coord))
-
-    // 判断位置是否为蛇身或食物 如果是，则不消除颜色
-    // 先判断左边 是否为食物所在位置  及是否蛇身
-    // console.log("a", !(x_left_coord == x_asle && y_left_coord == y_asle))
-
-    if(!(x_left_coord == x_asle && y_left_coord == y_asle) && is_snakeBody(x_left_coord, y_left_coord)){
-        $("#app .x-" + x_left_coord + ".y-" + y_left_coord + "").css({'background': ''})
-        // console.log('左边消除')
-        // console.log('左边消除 x_left_coord', x_left_coord)
-        // console.log('左边消除 y_left_coord', y_left_coord)
-        // console.log("is_snakeBody", is_snakeBody(x_left_coord, y_left_coord))
-    }
-    // 判断上边
-    if(!(x_top_coord == x_asle && y_top_coord == y_asle) && is_snakeBody(x_top_coord, y_top_coord)){
-        $("#app .x-" + x_top_coord + ".y-" + y_top_coord + "").css({'background': ''})
-        // console.log('上边消除')
-        // console.log('x_top_coord', x_top_coord)
-        // console.log('y_top_coord', y_top_coord)
-        // console.log("is_snakeBody", is_snakeBody(x_top_coord, y_top_coord))
-    }
-    // 判断右边
-    if(!(x_right_coord == x_asle && y_right_coord == y_asle) && is_snakeBody(x_right_coord, y_right_coord)){
-        $("#app .x-" + x_right_coord + ".y-" + y_right_coord + "").css({'background': ''})
-        // console.log('右边消除')
-        // console.log('x_right_coord', x_right_coord)
-        // console.log('y_right_coord', y_right_coord)
-        // console.log("is_snakeBody", is_snakeBody(y_right_coord, x_right_coord))
-
-    }
-    // 判断下边
-    if(!(x_bottom_coord == x_asle && y_bottom_coord == y_asle) && is_snakeBody(x_bottom_coord, y_bottom_coord)){
-        $("#app .x-" + x_bottom_coord + ".y-" + y_bottom_coord + "").css({'background': ''})
-        // console.log('下边消除')
-        // console.log('x_bottom_coord', x_bottom_coord)
-        // console.log('y_bottom_coord', y_bottom_coord)
-        // console.log("is_snakeBody", is_snakeBody(x_bottom_coord, y_bottom_coord))
+            if(!(x_left_coord == x_asle && y_left_coord == y_asle) && is_snakeBody(x_left_coord, y_left_coord)){
+                $("#app .x-" + x_left_coord + ".y-" + y_left_coord + "").css({'background': ''})
+            }
+            // 判断上边
+            if(!(x_top_coord == x_asle && y_top_coord == y_asle) && is_snakeBody(x_top_coord, y_top_coord)){
+                $("#app .x-" + x_top_coord + ".y-" + y_top_coord + "").css({'background': ''})
+            }
+            // 判断右边
+            if(!(x_right_coord == x_asle && y_right_coord == y_asle) && is_snakeBody(x_right_coord, y_right_coord)){
+                $("#app .x-" + x_right_coord + ".y-" + y_right_coord + "").css({'background': ''})
+            }
+            // 判断下边
+            if(!(x_bottom_coord == x_asle && y_bottom_coord == y_asle) && is_snakeBody(x_bottom_coord, y_bottom_coord)){
+                $("#app .x-" + x_bottom_coord + ".y-" + y_bottom_coord + "").css({'background': ''})
+            }
+        }
+        // 从最后一个元素开始循环
+        let color = j == 0 ? "red" : "black"
+        $("#app .x-"+snaikeBody[snakeLength - (j + 1)]['x']+".y-"+snaikeBody[snakeLength - (j + 1)]['y']+"").css({'background': color})
     }
 }
 
@@ -248,7 +180,6 @@ function eachFood(fangxiang){
         case 'r':
             // 检测是否吃到食物
             if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
-                console.log('吃到了食物，开心！')
                 let add_x = snaikeBody[0]['x']
                 let add_y = snaikeBody[0]['y'] - 1
                 addSnakeBody(add_x, add_y)
@@ -256,7 +187,6 @@ function eachFood(fangxiang){
             break
         case 'b':
             if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
-                console.log('吃到了食物，开心！')
                 let add_x = snaikeBody[0]['x'] - 1
                 let add_y = snaikeBody[0]['y']
                 addSnakeBody(add_x, add_y)
@@ -264,7 +194,6 @@ function eachFood(fangxiang){
             break
         case 'l': // 不是数字1 而是字母l
             if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
-                console.log('吃到了食物，开心！')
                 let add_x = snaikeBody[0]['x']
                 let add_y = snaikeBody[0]['y'] + 1
                 addSnakeBody(add_x, add_y)
@@ -272,7 +201,6 @@ function eachFood(fangxiang){
             break
         case 't':
             if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
-                console.log('吃到了食物，开心！')
                 let add_x = snaikeBody[0]['x'] + 1
                 let add_y = snaikeBody[0]['y']
                 addSnakeBody(add_x, add_y)
@@ -282,6 +210,7 @@ function eachFood(fangxiang){
 }
 
 function addSnakeBody(add_x, add_y){
+    console.log('吃到了食物，开心！')
     $("#app .x-" + add_x + ".y-" + add_y + "").css({'background': 'black'})
     snaikeBody.splice(0, 0, {
         x: add_x,
@@ -345,7 +274,7 @@ function loadShe(width, height, app) {
 
         let className = "grid"
         // 生成游戏格子 html
-        _html += "<div class='"+ className +" x-"+x+" y-"+y+"'></div>"
+        _html += "<div class='"+ className +" x-"+x+" y-"+y+"'>"+x+"-"+y+"</div>"
     }
     apps.append(_html) // 生成游戏格子
     // 初始化蛇的身体
@@ -369,6 +298,7 @@ function generateRandomFoods(){
     let randomY = GetRandomNum(0, 15)
     // 在此处写检测生成的位置是否是蛇身 如果是，则重新生成 直到非蛇身位置
     let flag = true
+    // console.log(snaikeBody)
     while(flag){
         for(let i = 0; i < snaikeBody.length; i++){
             console.log('生成食物 x', randomX, ' y ', randomY)
@@ -390,6 +320,8 @@ function generateRandomFoods(){
             }
         }
     }
+    // console.log("generateFoodsLoc", generateFoodsLoc)
+
 }
 
 function goGame() {
@@ -413,5 +345,6 @@ function onLoadSnakeBody(){
         let color = i == snakeLength - 1  ? snakeHeadColor : snakeBodyColor
         $("#app .x-"+ snaikeBody[i]['x'] +".y-"+ snaikeBody[i]['y'] +"").css({'background':color})
     }
+
     console.log('初始蛇身体', snaikeBody)
 }
