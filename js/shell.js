@@ -114,6 +114,7 @@ function startGame (app=$("#"+app+"")) {
     // 检测碰壁
     if(snaikeBody[snaikeBody.length - 1]['y'] > 15 || snaikeBody[snaikeBody.length - 1]['x'] > 15 ||
     snaikeBody[snaikeBody.length - 1]['y'] < 0 || snaikeBody[snaikeBody.length - 1]['x'] < 0){
+        console.log('撞到墙了！')
         $("#tip").css({'display':'block'})
         $("#tip .qiang").css({'display':'block'})
         $("#controller").css({'display':'none'})
@@ -153,25 +154,30 @@ function clear_axle(snakeLength){
             let x_asle = generateFoodsLoc['x']
             let y_asle = generateFoodsLoc['y']
 
-            if(!(x_left_coord == x_asle && y_left_coord == y_asle) && is_snakeBody(x_left_coord, y_left_coord)){
+            if(!(x_left_coord == x_asle && y_left_coord == y_asle) 
+            && is_snakeBody(x_left_coord, y_left_coord)){
                 $("#app .x-" + x_left_coord + ".y-" + y_left_coord + "").css({'background': ''})
             }
             // 判断上边
-            if(!(x_top_coord == x_asle && y_top_coord == y_asle) && is_snakeBody(x_top_coord, y_top_coord)){
+            if(!(x_top_coord == x_asle && y_top_coord == y_asle) 
+            && is_snakeBody(x_top_coord, y_top_coord)){
                 $("#app .x-" + x_top_coord + ".y-" + y_top_coord + "").css({'background': ''})
             }
             // 判断右边
-            if(!(x_right_coord == x_asle && y_right_coord == y_asle) && is_snakeBody(x_right_coord, y_right_coord)){
+            if(!(x_right_coord == x_asle && y_right_coord == y_asle) 
+            && is_snakeBody(x_right_coord, y_right_coord)){
                 $("#app .x-" + x_right_coord + ".y-" + y_right_coord + "").css({'background': ''})
             }
             // 判断下边
-            if(!(x_bottom_coord == x_asle && y_bottom_coord == y_asle) && is_snakeBody(x_bottom_coord, y_bottom_coord)){
+            if(!(x_bottom_coord == x_asle && y_bottom_coord == y_asle) 
+            && is_snakeBody(x_bottom_coord, y_bottom_coord)){
                 $("#app .x-" + x_bottom_coord + ".y-" + y_bottom_coord + "").css({'background': ''})
             }
         }
         // 从最后一个元素开始循环
         let color = j == 0 ? "red" : "black"
-        $("#app .x-"+snaikeBody[snakeLength - (j + 1)]['x']+".y-"+snaikeBody[snakeLength - (j + 1)]['y']+"").css({'background': color})
+        $("#app .x-"+snaikeBody[snakeLength - (j + 1)]['x']+".y-"+snaikeBody[snakeLength - (j + 1)]['y']+"")
+        .css({'background': color})
     }
 }
 
@@ -179,28 +185,32 @@ function eachFood(fangxiang){
     switch(fangxiang){
         case 'r':
             // 检测是否吃到食物
-            if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
+            if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] 
+            && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
                 let add_x = snaikeBody[0]['x']
                 let add_y = snaikeBody[0]['y'] - 1
                 addSnakeBody(add_x, add_y)
             }
             break
         case 'b':
-            if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
+            if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] 
+            && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
                 let add_x = snaikeBody[0]['x'] - 1
                 let add_y = snaikeBody[0]['y']
                 addSnakeBody(add_x, add_y)
             }
             break
         case 'l': // 不是数字1 而是字母l
-            if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
+            if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] 
+            && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
                 let add_x = snaikeBody[0]['x']
                 let add_y = snaikeBody[0]['y'] + 1
                 addSnakeBody(add_x, add_y)
             }
             break
         case 't':
-            if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
+            if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] 
+            && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
                 let add_x = snaikeBody[0]['x'] + 1
                 let add_y = snaikeBody[0]['y']
                 addSnakeBody(add_x, add_y)
@@ -311,7 +321,8 @@ function generateRandomFoods(){
                 break
             }else{
                 // 生成食物
-                $("#app .x-"+randomX+".y-"+randomY+"").removeClass("brithLoc").css({'background':'green'})
+                $("#app .x-"+randomX+".y-"+randomY+"").removeClass("brithLoc")
+                .css({'background':'green'})
                 generateFoodsLoc['x'] = randomX
                 generateFoodsLoc['y'] = randomY
                 isGenerateFoods = true
