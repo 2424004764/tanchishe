@@ -152,6 +152,7 @@ function startGame (app=$("#"+app+"")) {
     }
 }
 
+// 检测是是否蛇身体
 function is_snakeBody(x, y){
     let snakeBody = true
     for(let i = 0; i < snaikeBody.length; i++){
@@ -250,16 +251,7 @@ function eachFood(fangxiang){
                 console.log('吃到了食物，开心！')
                 let add_x = snaikeBody[0]['x']
                 let add_y = snaikeBody[0]['y'] - 1
-                $("#app .x-" + add_x + ".y-" + add_y + "").css({'background': 'black'})
-                snaikeBody.splice(0, 0, {
-                    x: add_x,
-                    y: add_y
-                })
-                console.log(snaikeBody)
-                // 解锁食物生成
-                isGenerateFoods = false
-                // 重新生成食物
-                generateRandomFoods()
+                addSnakeBody(add_x, add_y)
             }
             break
         case 'b':
@@ -267,33 +259,15 @@ function eachFood(fangxiang){
                 console.log('吃到了食物，开心！')
                 let add_x = snaikeBody[0]['x'] - 1
                 let add_y = snaikeBody[0]['y']
-                $("#app .x-" + add_x + ".y-" + add_y + "").css({'background': 'black'})
-                snaikeBody.splice(0, 0, {
-                    x: add_x,
-                    y: add_y
-                })
-                console.log(snaikeBody)
-                // 解锁食物生成
-                isGenerateFoods = false
-                // 重新生成食物
-                generateRandomFoods()
+                addSnakeBody(add_x, add_y)
             }
             break
-        case 'l':
+        case 'l': // 不是数字1 而是字母l
             if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
                 console.log('吃到了食物，开心！')
                 let add_x = snaikeBody[0]['x']
                 let add_y = snaikeBody[0]['y'] + 1
-                $("#app .x-" + add_x + ".y-" + add_y + "").css({'background': 'black'})
-                snaikeBody.splice(0, 0, {
-                    x: add_x,
-                    y: add_y
-                })
-                console.log(snaikeBody)
-                // 解锁食物生成
-                isGenerateFoods = false
-                // 重新生成食物
-                generateRandomFoods()
+                addSnakeBody(add_x, add_y)
             }
             break
         case 't':
@@ -301,18 +275,23 @@ function eachFood(fangxiang){
                 console.log('吃到了食物，开心！')
                 let add_x = snaikeBody[0]['x'] + 1
                 let add_y = snaikeBody[0]['y']
-                $("#app .x-" + add_x + ".y-" + add_y + "").css({'background': 'black'})
-                snaikeBody.splice(0, 0, {
-                    x: add_x,
-                    y: add_y
-                })
-                console.log(snaikeBody)
-                // 解锁食物生成
-                isGenerateFoods = false
-                // 重新生成食物
-                generateRandomFoods()
+                addSnakeBody(add_x, add_y)
             }
+            break
     }
+}
+
+function addSnakeBody(add_x, add_y){
+    $("#app .x-" + add_x + ".y-" + add_y + "").css({'background': 'black'})
+    snaikeBody.splice(0, 0, {
+        x: add_x,
+        y: add_y
+    })
+    // console.log(snaikeBody)
+    // 解锁食物生成
+    isGenerateFoods = false
+    // 重新生成食物
+    generateRandomFoods()
 }
 
 function moveDispose(symbol, axle){
@@ -382,30 +361,35 @@ function GetRandomNum(Min, Max) {
 
 // 生成随机食物
 function generateRandomFoods(){
-    // console.log('getfoods', getFoods)
-    let randomX = GetRandomNum(0, 15)
-    let randomY = GetRandomNum(0, 15)
     if(isGenerateFoods){
         return false // 如果已生成食物 则跳过
     }
+    // 生成随机坐标
+    let randomX = GetRandomNum(0, 15)
+    let randomY = GetRandomNum(0, 15)
     // 在此处写检测生成的位置是否是蛇身 如果是，则重新生成 直到非蛇身位置
-    console.log('生成食物 x', randomX, ' y ', randomY)
-
-    for(let i = 0; i < snaikeBody.length; i++){
-        // 如果生成的食物在蛇身范围内
-        if(snaikeBody[i]['x'] == randomX && snaikeBody[i]['y'] == randomY){
-            console.log('生成的食物在蛇身体部分，重新生成')
-            // 继续循环 直到生成的食物不在蛇身范围内
-            continue
-        }else{
-            // 生成食物
-            $("#app .x-"+randomX+".y-"+randomY+"").removeClass("brithLoc").css({'background':'green'})
-            generateFoodsLoc['x'] = randomX
-            generateFoodsLoc['y'] = randomY
-            isGenerateFoods = true
+    let flag = true
+    while(flag){
+        for(let i = 0; i < snaikeBody.length; i++){
+            console.log('生成食物 x', randomX, ' y ', randomY)
+            // 如果生成的食物在蛇身范围内
+            if(snaikeBody[i]['x'] == randomX && snaikeBody[i]['y'] == randomY){
+                console.log('生成的食物在蛇身体部分，重新生成')
+                // 继续循环 直到生成的食物不在蛇身范围内
+                randomX = GetRandomNum(0, 15)
+                randomY = GetRandomNum(0, 15)
+                break
+            }else{
+                // 生成食物
+                $("#app .x-"+randomX+".y-"+randomY+"").removeClass("brithLoc").css({'background':'green'})
+                generateFoodsLoc['x'] = randomX
+                generateFoodsLoc['y'] = randomY
+                isGenerateFoods = true
+                flag = !flag
+                break
+            }
         }
     }
-    
 }
 
 function goGame() {
