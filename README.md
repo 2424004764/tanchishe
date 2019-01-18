@@ -134,3 +134,7 @@ let keyCode = event.which
 
 
 4、用鼠标控制方向
+
+
+
+5、得分、排名、难度控制功能
