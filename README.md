@@ -102,7 +102,42 @@ function moveDispose(symbol, axle){
 
 目前还存在的两个问题：
 
-1、游戏过程中  生成食物问题，有时候会生成到蛇身体位置
+1、游戏过程中  生成食物问题，有时候会生成到蛇身体位置  已解决  哇哈
+
+```javascript
+// 生成随机食物
+function generateRandomFoods(){
+    if(isGenerateFoods){
+        return false // 如果已生成食物 则跳过
+    }
+    // 在此处写检测生成的位置是否是蛇身 如果是，则重新生成 直到非蛇身位置
+    let flag = true
+    // console.log(snaikeBody)
+    while(flag){
+        // console.log('生成食物 x', randomX, ' y ', randomY)
+        for(let i = 0; i < snaikeBody.length; i++){
+            // 如果生成的食物在蛇身范围内
+            if(snaikeBody[i]['x'] == randomX && snaikeBody[i]['y'] == randomY){
+                // 继续循环 直到生成的食物不在蛇身范围内
+                randomX = GetRandomNum(0, 15)
+                randomY = GetRandomNum(0, 15)
+                break
+            }
+            if(i == snaikeBody.length - 1){
+                flag = !flag
+                break
+            }
+        }
+    }
+    // 生成食物
+    $("#app .x-"+randomX+".y-"+randomY+"").removeClass("brithLoc")
+    .css({'background':'green'})
+    generateFoodsLoc['x'] = randomX
+    generateFoodsLoc['y'] = randomY
+    isGenerateFoods = true
+    // console.log("generateFoodsLoc", generateFoodsLoc)
+}
+```
 
 2、不能让蛇反向移动，当蛇的前进方向为右时，按下左方向键时，还应该向右方向移动  已解决
 
@@ -137,4 +172,4 @@ let keyCode = event.which
 
 
 
-5、得分、排名、难度控制功能
+5、得分、排名、难度控制、对游戏评价|评分功能

@@ -6,34 +6,21 @@ let generateFoodsLoc = {x: '', y:''} // 生成的食物坐标
 let ifPausegame = false // 是否暂停游戏
 let snaikeBody = [] // 蛇的身体 
 let speed = 200 // 速度 值越小 移动速度越快 建议100~1000 之间
+// 生成随机坐标
+let randomX = GetRandomNum(0, 15)
+let randomY = GetRandomNum(0, 15)
 
 $(document).ready(function(){
+    if(!check()){
+        alert("请用电脑打开，手机无法操作！")
+    }
     let width = 800 // 游戏屏幕宽度
     let height = 800 // 游戏屏幕高度 
     let app = "app" // 游戏容器ID
     loadShe(width, height, app)
 
-    // 开始游戏
-    $(".startGame").on('click', function(){
-        console.log('isStartGame', isStartGame)
-        if(!isStartGame) return false // 是否可以开始游戏
-        $(".brithLoc").css({'background':'orange'})
-        goGame()
-    })
-    // 重新生成位置
-    $(".reloadLoc").on('click', function(){
-        location.reload()
-    })
-    // 暂停游戏
-    $(".pauseGame").on('click', function(){
-        console.log('暂停游戏')
-        clearInterval(t1)
-    })
-    // 继续游戏
-    $(".goGame").on('click', function(){
-        console.log('继续游戏')
-        goGame()
-    })
+    // 监听键盘事件
+    monitor_click_event()
 
     // 键盘事件
     if(isStartGame){
@@ -103,6 +90,7 @@ function startGame (app=$("#"+app+"")) {
                 ){
                     console.log('咬到自己了！')
                     $("#tip").css({'display':'block'})
+                    $("#tip .score span").html(snaikeBody.length - 3)
                     $("#tip .commit").css({'display':'block'})
                     $("#controller").css({'display':'none'})
                     clearInterval(t1) // 清除定时器
@@ -116,9 +104,11 @@ function startGame (app=$("#"+app+"")) {
     snaikeBody[snaikeBody.length - 1]['y'] < 0 || snaikeBody[snaikeBody.length - 1]['x'] < 0){
         console.log('撞到墙了！')
         $("#tip").css({'display':'block'})
+        $("#tip .score span").html(snaikeBody.length - 3)
         $("#tip .qiang").css({'display':'block'})
         $("#controller").css({'display':'none'})
         clearInterval(t1) // 清除定时器
+        ifPausegame = false
     }
 }
 
@@ -221,7 +211,7 @@ function eachFood(fangxiang){
 }
 
 function addSnakeBody(add_x, add_y){
-    console.log('吃到了食物，开心！')
+    // console.log('吃到了食物，开心！')
     $("#app .x-" + add_x + ".y-" + add_y + "").css({'background': 'black'})
     snaikeBody.splice(0, 0, {
         x: add_x,
@@ -291,6 +281,7 @@ function loadShe(width, height, app) {
     apps.append(_html) // 生成游戏格子
     // 初始化蛇的身体
     onLoadSnakeBody()
+    isGenerateFoods = false
     // 生成随机食物
     generateRandomFoods()
 }
@@ -305,32 +296,31 @@ function generateRandomFoods(){
     if(isGenerateFoods){
         return false // 如果已生成食物 则跳过
     }
-    // 生成随机坐标
-    let randomX = GetRandomNum(0, 15)
-    let randomY = GetRandomNum(0, 15)
     // 在此处写检测生成的位置是否是蛇身 如果是，则重新生成 直到非蛇身位置
     let flag = true
     // console.log(snaikeBody)
     while(flag){
+        // console.log('生成食物 x', randomX, ' y ', randomY)
         for(let i = 0; i < snaikeBody.length; i++){
-            console.log('生成食物 x', randomX, ' y ', randomY)
             // 如果生成的食物在蛇身范围内
             if(snaikeBody[i]['x'] == randomX && snaikeBody[i]['y'] == randomY){
-                console.log('生成的食物在蛇身体部分，重新生成')
                 // 继续循环 直到生成的食物不在蛇身范围内
+                randomX = GetRandomNum(0, 15)
+                randomY = GetRandomNum(0, 15)
                 break
-            }else{
-                // 生成食物
-                $("#app .x-"+randomX+".y-"+randomY+"").removeClass("brithLoc")
-                .css({'background':'green'})
-                generateFoodsLoc['x'] = randomX
-                generateFoodsLoc['y'] = randomY
-                isGenerateFoods = true
+            }
+            if(i == snaikeBody.length - 1){
                 flag = !flag
                 break
             }
         }
     }
+    // 生成食物
+    $("#app .x-"+randomX+".y-"+randomY+"").removeClass("brithLoc")
+    .css({'background':'green'})
+    generateFoodsLoc['x'] = randomX
+    generateFoodsLoc['y'] = randomY
+    isGenerateFoods = true
     // console.log("generateFoodsLoc", generateFoodsLoc)
 }
 

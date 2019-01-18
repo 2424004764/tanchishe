@@ -1,7 +1,8 @@
 #app{
-    margin-left: 50px;
+    clear: both;
+    margin: 0 auto;
     /* border: 1px solid red; */
-    float: left;
+    margin-top: 10px;
 }
 #app .grid{
     float: left;
@@ -18,13 +19,26 @@
     cursor: pointer;
     clear: both;
 }
+#controller a{
+    display: inline-block;
+    /* border: 1px solid red; */
+    background: green;
+    color: white;
+    cursor: pointer;
+    height: 30px;
+    padding: 5px 10px 5px 10px;
+    line-height: 30px;
+    border-radius: 10px;
+}
+#controller a:hover{
+    color: yellow;
+}
 #tip{
     border: 1px solid red;
     position: absolute;
     top: 38.5%;
     left: 38.5%;
     width: 30%;
-    height: 120px;
     line-height: 50px;
     text-align: center;
     background: white;
@@ -72,9 +86,57 @@
     top: 180px;
 }
 
-#tips{
-    border: 1px solid red;
+.tips{
+    border: 1px solid black;
     float: left;
     margin-left: 50px;
     height: 800px;
+    position: fixed;
+    top: 60px;
+    left: 50px;
+    display: none;
+    width: 200px;
+    background: white;
+}
+.update_text{
+    width: 500px;
+    padding: 10px;
+}
+.update_text .log-list{
+    height: 720px;
+    /* border: 1px solid red; */
+    padding: 10px;
+    margin-bottom: 5px;
+    overflow: auto;
+}
+.update_text a{
+    display: block;
+    /* border: 1px solid red; */
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    color: black;
+    background: orange;
+    cursor: pointer;
+}
+.update_text a:hover{
+    color: white;
+}
+#top_controller{
+    /* border: 1px solid red; */
+    background: #222222;
+    height: 40px;
+}
+#top_controller a{
+    display: inline-block;
+    height: 30px;
+    /* border: 1px solid red; */
+    line-height: 30px;
+    padding: 5px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+#top_controller a:hover{
+    background: green;
 }

@@ -7,32 +7,55 @@
     <title>贪吃蛇-原创</title>
     <link rel="stylesheet" href="./css/index.css">
     <script src="./js/jquery1.10.2.min.js"></script>
+    <script src="./js/click_event.js"></script>
+    <script src="./js/tool.js"></script>
     <script src="./js/shell.js"></script>
     <link rel="icon" href="./resouce/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="./resouce/favicon.ico" type="image/x-icon" />
-
 </head>
 <body>
+
+    <div id="top_controller">
+        <a class="view_ranking">查看排名</a>
+        <a class="view_update_log">查看更新日志</a>
+        <a class="refresh_page">刷新</a>
+    </div>
+
+    <div class="tips ranking update_text">
+        <div class="text">排名</div>
+        <div class="log-list">
+            <p>2019-01-08 22:10--修改生成食物时会生成到蛇身体上的bug</p>
+        </div>
+        <a class="close_update_text">关闭</a>
+    </div>
+
+    <div class="tips update_text">
+        <div class="text">更新说明</div>
+        <div class="log-list">
+            <p>2019-01-08 23:25--菜单加入刷新按钮</p>
+            <p>2019-01-08 23:17--游戏主区域居中</p>
+            <p>2019-01-08 23:13--碰壁死亡或咬到自己死亡会统计得分数</p>
+            <p>2019-01-08 23:01--优化底部开始游戏等按钮样式</p>
+            <p>2019-01-08 22:56--优化顶部、日志窗口关闭按钮样式</p>
+            <p>2019-01-08 22:26--加入更新日志</p>
+            <p>2019-01-08 22:10--修改生成食物时会生成到蛇身体上的bug</p>
+        </div>
+        <a class="close_update_text">关闭</a>
+    </div>
+
     <div id="app" tabindex="0" hidefocus="true"></div>
 
-    <div id="tips">
-        <div class="text">排名</div>
-    </div>
-
-    <div id="tips">
-        <div class="text">更新说明</div>
-    </div>
-
     <div id="controller" style="padding:10px">
-        <button class="startGame">开始游戏</button>
-        <button class="reloadLoc">重新开始</button>
-        <button class="pauseGame">暂停游戏</button>
-        <button class="goGame">继续游戏</button>
+        <a class="startGame">开始游戏</a>
+        <a class="reloadLoc">重新开始</a>
+        <a class="pauseGame">暂停游戏</a>
+        <a class="goGame">继续游戏</a>
     </div>
 
     <div id="tip">
         <span class="qiang">撞到墙了！游戏结束<br></span>
         <span class="commit">咬到自己了！游戏结束<br></span>
+        <span class="score">得分：<span></span> 分<br></span>
         <button class="reloadLoc">重新开始</button>
     </div>
 
