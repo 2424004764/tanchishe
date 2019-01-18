@@ -182,37 +182,38 @@ function clear_axle(snakeLength){
 }
 
 function eachFood(fangxiang){
+    let add_x,add_y
     switch(fangxiang){
         case 'r':
             // 检测是否吃到食物
             if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] 
             && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
-                let add_x = snaikeBody[0]['x']
-                let add_y = snaikeBody[0]['y'] - 1
+                add_x = snaikeBody[0]['x']
+                add_y = snaikeBody[0]['y'] - 1
                 addSnakeBody(add_x, add_y)
             }
             break
         case 'b':
             if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] 
             && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
-                let add_x = snaikeBody[0]['x'] - 1
-                let add_y = snaikeBody[0]['y']
+                add_x = snaikeBody[0]['x'] - 1
+                add_y = snaikeBody[0]['y']
                 addSnakeBody(add_x, add_y)
             }
             break
         case 'l': // 不是数字1 而是字母l
             if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] 
             && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
-                let add_x = snaikeBody[0]['x']
-                let add_y = snaikeBody[0]['y'] + 1
+                add_x = snaikeBody[0]['x']
+                add_y = snaikeBody[0]['y'] + 1
                 addSnakeBody(add_x, add_y)
             }
             break
         case 't':
             if(snaikeBody[snaikeBody.length - 1]['y'] == generateFoodsLoc['y'] 
             && snaikeBody[snaikeBody.length - 1]['x'] == generateFoodsLoc['x']){
-                let add_x = snaikeBody[0]['x'] + 1
-                let add_y = snaikeBody[0]['y']
+                add_x = snaikeBody[0]['x'] + 1
+                add_y = snaikeBody[0]['y']
                 addSnakeBody(add_x, add_y)
             }
             break
@@ -284,7 +285,8 @@ function loadShe(width, height, app) {
 
         let className = "grid"
         // 生成游戏格子 html
-        _html += "<div class='"+ className +" x-"+x+" y-"+y+"'>"+x+"-"+y+"</div>"
+        _html += "<div class='"+ className +" x-"+x+" y-"+y+"'></div>"
+        // _html += "<div class='"+ className +" x-"+x+" y-"+y+"'>"+x+"-"+y+"</div>"
     }
     apps.append(_html) // 生成游戏格子
     // 初始化蛇的身体
@@ -316,8 +318,6 @@ function generateRandomFoods(){
             if(snaikeBody[i]['x'] == randomX && snaikeBody[i]['y'] == randomY){
                 console.log('生成的食物在蛇身体部分，重新生成')
                 // 继续循环 直到生成的食物不在蛇身范围内
-                randomX = GetRandomNum(0, 15)
-                randomY = GetRandomNum(0, 15)
                 break
             }else{
                 // 生成食物
@@ -332,7 +332,6 @@ function generateRandomFoods(){
         }
     }
     // console.log("generateFoodsLoc", generateFoodsLoc)
-
 }
 
 function goGame() {

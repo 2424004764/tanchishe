@@ -1,6 +1,7 @@
 #app{
-    margin: 0 auto;
+    margin-left: 50px;
     /* border: 1px solid red; */
+    float: left;
 }
 #app .grid{
     float: left;
@@ -15,6 +16,7 @@
     width: 800px;
     margin: 0 auto;
     cursor: pointer;
+    clear: both;
 }
 #tip{
     border: 1px solid red;
@@ -26,6 +28,7 @@
     line-height: 50px;
     text-align: center;
     background: white;
+    clear: both;
 }
 #asle{
     width: 800px;
@@ -67,4 +70,11 @@
     height: 180px;
     left: 180px;
     top: 180px;
+}
+
+#tips{
+    border: 1px solid red;
+    float: left;
+    margin-left: 50px;
+    height: 800px;
 }
