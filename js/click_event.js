@@ -1,7 +1,7 @@
 function monitor_click_event(){
     // 开始游戏
     $(".startGame").on('click', function(){
-        console.log('isStartGame', isStartGame)
+        // console.log('isStartGame', isStartGame)
         if(!isStartGame) return false // 是否可以开始游戏
         $(".brithLoc").css({'background':'orange'})
         goGame()

@@ -346,5 +346,5 @@ function onLoadSnakeBody(){
         $("#app .x-"+ snaikeBody[i]['x'] +".y-"+ snaikeBody[i]['y'] +"").css({'background':color})
     }
 
-    console.log('初始蛇身体', snaikeBody)
+    // console.log('初始蛇身体', snaikeBody)
 }
