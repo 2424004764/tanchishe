@@ -7,24 +7,30 @@
     <title>贪吃蛇-原创</title>
     <link rel="stylesheet" href="./css/index.css">
     <script src="./js/jquery1.10.2.min.js"></script>
-    <script src="./js/click_event.js"></script>
     <script src="./js/tool.js"></script>
+    <script src="./js/click_event.js"></script>
     <script src="./js/shell.js"></script>
     <link rel="icon" href="./resouce/favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="./resouce/favicon.ico" type="image/x-icon" />
 </head>
 <body>
+    <audio src="./resouce/yao.mp3" id="each_food"></audio>
+    <audio src="./resouce/zhuangqiang.mp3" id="zhuangqiang"></audio>
+    <audio src="./resouce/yaozj.mp3" id="yaozj"></audio>
 
     <div id="top_controller">
         <a class="view_ranking">查看排名</a>
         <a class="view_update_log">查看更新日志</a>
         <a class="refresh_page">刷新</a>
+        <a class="login_info">欢迎你：<span></span></a>
+        <a class="login_info quit">退出</a>
+        <a >打地鼠</a>
     </div>
 
     <div class="tips ranking update_text">
-        <div class="text">排名</div>
+        <div class="text">排名(绿色背景为自己的分数)</div>
         <div class="log-list">
-            <p>2019-01-08 22:10--修改生成食物时会生成到蛇身体上的bug</p>
+            <p>正在加载排名数据..</p>
         </div>
         <a class="close_update_text">关闭</a>
     </div>
@@ -32,14 +38,18 @@
     <div class="tips update_text">
         <div class="text">更新说明</div>
         <div class="log-list">
-            <p>2019-01-08 23:53--关闭控制台日志输出</p>
-            <p>2019-01-08 23:25--菜单加入刷新按钮</p>
-            <p>2019-01-08 23:17--游戏主区域居中</p>
-            <p>2019-01-08 23:13--碰壁死亡或咬到自己死亡会统计得分数</p>
-            <p>2019-01-08 23:01--优化底部开始游戏等按钮样式</p>
-            <p>2019-01-08 22:56--优化顶部、日志窗口关闭按钮样式</p>
-            <p>2019-01-08 22:26--加入更新日志</p>
-            <p>2019-01-08 22:10--修改生成食物时会生成到蛇身体上的bug</p>
+            <p>2019-01-20 17:15--控制音频播放</p>
+            <p>2019-01-20 16:40--吃到食物、撞到墙壁、咬到自己加入配音</p>
+            <p>2019-01-20 15:30--底部加入实时得分显示</p>
+            <p>2019-01-20 14:50--完成排名功能！</p>
+            <p>2019-01-18 23:53--关闭控制台日志输出</p>
+            <p>2019-01-18 23:25--菜单加入刷新按钮</p>
+            <p>2019-01-18 23:17--游戏主区域居中</p>
+            <p>2019-01-18 23:13--碰壁死亡或咬到自己死亡会统计得分数</p>
+            <p>2019-01-18 23:01--优化底部开始游戏等按钮样式</p>
+            <p>2019-01-18 22:56--优化顶部、日志窗口关闭按钮样式</p>
+            <p>2019-01-18 22:26--加入更新日志</p>
+            <p>2019-01-18 22:10--修改生成食物时会生成到蛇身体上的bug</p>
         </div>
         <a class="close_update_text">关闭</a>
     </div>
@@ -51,13 +61,16 @@
         <a class="reloadLoc">重新开始</a>
         <a class="pauseGame">暂停游戏</a>
         <a class="goGame">继续游戏</a>
+        <a class="real_time_score">得分 <span>0</span> 分</a>
+        <a class="audio_togger button">关闭音频</a>
     </div>
 
     <div id="tip">
         <span class="qiang">撞到墙了！游戏结束<br></span>
         <span class="commit">咬到自己了！游戏结束<br></span>
         <span class="score">得分：<span></span> 分<br></span>
-        <button class="reloadLoc">重新开始</button>
+        <span class="ranking_explain"><span></span><br></span>
+        <a class="reloadLoc button">重新开始</a>
     </div>
 
     <!-- <div id="asle">

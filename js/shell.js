@@ -9,11 +9,22 @@ let speed = 200 // 速度 值越小 移动速度越快 建议100~1000 之间
 // 生成随机坐标
 let randomX = GetRandomNum(0, 15)
 let randomY = GetRandomNum(0, 15)
+let LSNameKey = "Tname" // 本地localstorange 用户名键名
+let LSTNAME = LS.getLS(LSNameKey)
+let resuest_url = "http://blog.fologde.com/public/index.php/api/Tcs/"
+let is_play_audio = LS.getLS('is_play_audio') ? LS.getLS('is_play_audio') : 'true' // 默认播放音频 配置保存到本地存储中
 
 $(document).ready(function(){
     if(!check()){
         alert("请用电脑打开，手机无法操作！")
     }
+    // 保存音频配置
+    LS.setLS('is_play_audio', is_play_audio)
+    $("#controller .audio_togger").html(is_play_audio == 'true' ? "关闭音频" : "打开音频")
+
+    // 登陆
+    login()
+
     let width = 800 // 游戏屏幕宽度
     let height = 800 // 游戏屏幕高度 
     let app = "app" // 游戏容器ID
@@ -89,11 +100,19 @@ function startGame (app=$("#"+app+"")) {
                 && snaikeBody[snaikeBody.length - 1]['y'] == snaikeBody[n]['y']
                 ){
                     console.log('咬到自己了！')
+                    play_audio('yaozj')
+                    let score = snaikeBody.length - 3 // 分数
                     $("#tip").css({'display':'block'})
-                    $("#tip .score span").html(snaikeBody.length - 3)
+                    $("#tip .score span").html(score)
                     $("#tip .commit").css({'display':'block'})
                     $("#controller").css({'display':'none'})
+                    let explain_text = LSTNAME != null && LSTNAME != "" 
+                    $(".ranking_explain span").html(score > 0 && explain_text ? "正在保存成绩" : "分数为0或未输入昵称时，不保存成绩")
                     clearInterval(t1) // 清除定时器
+                    // 更新排行榜分数
+                    if(LSTNAME != "" && LSTNAME != ""){
+                        update_ranking(LSTNAME, score)
+                    }
                 }
             }
         }
@@ -103,12 +122,20 @@ function startGame (app=$("#"+app+"")) {
     if(snaikeBody[snaikeBody.length - 1]['y'] > 15 || snaikeBody[snaikeBody.length - 1]['x'] > 15 ||
     snaikeBody[snaikeBody.length - 1]['y'] < 0 || snaikeBody[snaikeBody.length - 1]['x'] < 0){
         console.log('撞到墙了！')
+        play_audio('zhuangqiang')
+        let score = snaikeBody.length - 3 // 分数
         $("#tip").css({'display':'block'})
-        $("#tip .score span").html(snaikeBody.length - 3)
+        $("#tip .score span").html(score)
         $("#tip .qiang").css({'display':'block'})
         $("#controller").css({'display':'none'})
+        let explain_text = LSTNAME != null && LSTNAME != "" 
+        $(".ranking_explain span").html(score > 0 && explain_text ? "正在保存成绩" : "分数为0或未输入昵称时，不保存成绩")
         clearInterval(t1) // 清除定时器
         ifPausegame = false
+        // 更新排行榜分数
+        if(LSTNAME != "" && LSTNAME != ""){
+            update_ranking(LSTNAME, score)
+        }
     }
 }
 
@@ -212,11 +239,14 @@ function eachFood(fangxiang){
 
 function addSnakeBody(add_x, add_y){
     // console.log('吃到了食物，开心！')
+    play_audio('each_food')
     $("#app .x-" + add_x + ".y-" + add_y + "").css({'background': 'black'})
     snaikeBody.splice(0, 0, {
         x: add_x,
         y: add_y
     })
+    let score = snaikeBody.length - 3
+    $("#controller .real_time_score span").html(score)
     // console.log(snaikeBody)
     // 解锁食物生成
     isGenerateFoods = false
@@ -347,4 +377,44 @@ function onLoadSnakeBody(){
     }
 
     // console.log('初始蛇身体', snaikeBody)
+}
+
+function login(){
+    // 判断是否登陆
+    let Tname = LS.getLS(LSNameKey)
+    if(Tname == null || Tname == ""){
+        let Tnames = prompt("请输入你的昵称，以便记录你的排名，四个字以内..")
+        Tnames == null ? " " : Tnames
+
+        if(Tnames == ""){
+            alert("你输入的昵称为空！请重新输入")
+            login()
+            return false
+        }
+        if(Tnames != null && Tnames != ""){
+            if(Tnames.length > 4){
+                alert("你输入的昵称长度大于4！请重新输入昵称，四个字以内")
+                login()
+                return false
+            }else{
+                LS.setLS(LSNameKey, Tnames)
+                location.reload()
+                return true
+            }
+        }
+    }
+    if(Tname != null && Tname){
+        console.log('已登陆，用户名：', LS.getLS(LSNameKey))
+        $("#top_controller .login_info").css({'display':'inline-block'})
+        $("#top_controller .login_info span").html(LS.getLS(LSNameKey))
+    }
+}
+
+// 更新排行榜
+function update_ranking(username, score){
+    console.log('分数', score)
+    // get_ranking()  分数大于0才记录
+    if(score > 0 && username != "" && username != null){
+        add_ranking(username, score)
+    }
 }
