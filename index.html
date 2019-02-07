@@ -24,20 +24,26 @@
         <a class="refresh_page">刷新</a>
         <a class="login_info">欢迎你：<span></span></a>
         <a class="login_info quit">退出</a>
-        <a >打地鼠</a>
+        <a href="../打地鼠/index.html">打地鼠</a>
+        <a href="../1024/index.html">1024</a>
     </div>
 
     <div class="tips ranking update_text">
-        <div class="text">排名(绿色背景为自己的分数)</div>
+        <div class="text">排名(绿色背景为自己的分数 只显示最高分)</div>
+        <a class="close_update_text">关闭</a>
         <div class="log-list">
             <p>正在加载排名数据..</p>
         </div>
-        <a class="close_update_text">关闭</a>
     </div>
 
     <div class="tips update_text">
         <div class="text">更新说明</div>
+        <a class="close_update_text">关闭</a>
         <div class="log-list">
+            <p>2019-01-22 23:01--游戏开发者QQ：2424004764</p>
+            <p>2019-01-22 22:59--排名列表、更新信息关闭按钮移动到区域上方</p>
+            <p>2019-01-22 22:58--游戏速度控制</p>
+            <p>2019-01-22 22:34--游戏区域缩小</p>
             <p>2019-01-20 17:15--控制音频播放</p>
             <p>2019-01-20 16:40--吃到食物、撞到墙壁、咬到自己加入配音</p>
             <p>2019-01-20 15:30--底部加入实时得分显示</p>
@@ -51,7 +57,6 @@
             <p>2019-01-18 22:26--加入更新日志</p>
             <p>2019-01-18 22:10--修改生成食物时会生成到蛇身体上的bug</p>
         </div>
-        <a class="close_update_text">关闭</a>
     </div>
 
     <div id="app" tabindex="0" hidefocus="true"></div>
@@ -63,6 +68,10 @@
         <a class="goGame">继续游戏</a>
         <a class="real_time_score">得分 <span>0</span> 分</a>
         <a class="audio_togger button">关闭音频</a>
+        <a class="button">速度选择
+            <select id="speed_select" onchange="change_speed(this.value)">
+            </select>
+        </a>
     </div>
 
     <div id="tip">

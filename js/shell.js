@@ -5,7 +5,37 @@ let isGenerateFoods = false // 是否生成食物
 let generateFoodsLoc = {x: '', y:''} // 生成的食物坐标
 let ifPausegame = false // 是否暂停游戏
 let snaikeBody = [] // 蛇的身体 
-let speed = 200 // 速度 值越小 移动速度越快 建议100~1000 之间
+let speed_array = [
+    {
+        "name" : "青铜",
+        "speed" : 1000
+    },
+    {
+        "name" : "白银",
+        "speed" : 800
+    },
+    {
+        "name" : "黄金",
+        "speed" : 600
+    },
+    {
+        "name" : "钻石",
+        "speed" : 400
+    },
+    {
+        "name" : "大师",
+        "speed" : 200
+    },
+    {
+        "name" : "前无古人",
+        "speed" : 100
+    },
+    {
+        "name" : "后无来者",
+        "speed" : 50
+    }
+]
+let speed = speed_array[4]['speed'] // 速度 值越小 移动速度越快 建议100~1000 之间
 // 生成随机坐标
 let randomX = GetRandomNum(0, 15)
 let randomY = GetRandomNum(0, 15)
@@ -24,11 +54,16 @@ $(document).ready(function(){
 
     // 登陆
     login()
-
-    let width = 800 // 游戏屏幕宽度
-    let height = 800 // 游戏屏幕高度 
+    let real_grid_width = (window.screen.width / 3).toFixed(2)
+    let width = real_grid_width + 'px' // 游戏屏幕宽度
+    let height = width // 游戏屏幕高度 
     let app = "app" // 游戏容器ID
     loadShe(width, height, app)
+    $("#app .grid").css({"width":((real_grid_width / 16) - 3).toFixed(1) + "px",
+     "height":((real_grid_width / 16) - 3).toFixed(1) + "px"})
+
+    // 加载速度选择框
+    load_speed_option()
 
     // 监听键盘事件
     monitor_click_event()
@@ -288,7 +323,7 @@ function loadShe(width, height, app) {
     // 初始化游戏区域、坐标轴
     let apps = $("#"+app+"")
     apps.html("")
-    apps.css({"width":width+"px", "height":height+"px"})
+    apps.css({"width":width, "height":height})
     // 初始化游戏格子
     let _html = "" // 定义游戏格子html 元素
     let gridCount = 16 * 16 // 格子数
@@ -373,7 +408,8 @@ function onLoadSnakeBody(){
         let snakeBodyColor = 'black' // 蛇身颜色
         let snakeHeadColor = 'red' // 蛇头颜色
         let color = i == snakeLength - 1  ? snakeHeadColor : snakeBodyColor
-        $("#app .x-"+ snaikeBody[i]['x'] +".y-"+ snaikeBody[i]['y'] +"").css({'background':color})
+        $("#app .x-"+ snaikeBody[i]['x'] +".y-"+ snaikeBody[i]['y'] +"")
+        .css({'background':color})
     }
 
     // console.log('初始蛇身体', snaikeBody)
@@ -417,4 +453,19 @@ function update_ranking(username, score){
     if(score > 0 && username != "" && username != null){
         add_ranking(username, score)
     }
+}
+
+function load_speed_option(){
+    let speed_html = ""
+    for(let i = 0; i < speed_array.length; i++){
+        name = speed_array[i]['name']
+        selected = speed == speed_array[i]['speed'] ? 'selected' : ''
+
+        speed_html += '<option value="'+i+'" '+selected+'>'+name+'</option>'
+    }
+    $("#speed_select").html(speed_html)
+}
+
+function change_speed(speed_index){
+    speed = speed_array[speed_index]['speed']
 }
